@@ -224,7 +224,8 @@ class DjangoSpider(DjangoBaseSpider):
             url_name = url_elem.scraped_obj_attr.name
             if(item and url_name in item):
                 url = item[url_name]
-                cnt = self.scraped_obj_class.objects.filter(url=item[url_name]).count()
+                criteria = {url_name: item[url_name]}
+                cnt = self.scraped_obj_class.objects.filter(**criteria).count()
                 cnt1 = self.scraper.get_standard_update_elems_from_detail_page().count()
                 cnt2 = self.scraper.get_from_detail_page_scrape_elems().count()
                 # Mark item as DOUBLE item
